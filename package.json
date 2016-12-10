@@ -36,7 +36,6 @@
   "dependencies": {
     "cloneable-readable": "^1.0.0",
     "fast-json-parse": "^1.0.2",
-    "inherits": "^2.0.3",
     "minimist": "^1.2.0",
     "pump": "^1.0.1",
     "readable-stream": "^2.2.2",

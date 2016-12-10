@@ -1,7 +1,6 @@
 'use strict'
 
 const split = require('split2')
-const Transform = require('readable-stream').Transform
 const cloneable = require('cloneable-readable')
 const pump = require('pump')
 const Parse = require('fast-json-parse')
@@ -31,10 +30,6 @@ function buildFilter (filter) {
 
 function alwaysTrue () {
   return true
-}
-
-function safeParse (line) {
-  return res.value
 }
 
 module.exports = tee
