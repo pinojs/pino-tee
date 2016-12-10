@@ -1,0 +1,45 @@
+{
+  "name": "pino-tee",
+  "version": "0.0.1",
+  "description": "Tee pino logs into a file, with multiple levels",
+  "main": "tee.js",
+  "scripts": {
+    "test": "standard | snazzy && tap test.js"
+  },
+  "precommit": "test",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinojs/pino-tee.git"
+  },
+  "keywords": [
+    "pino",
+    "logger",
+    "tee",
+    "level",
+    "multiple",
+    "multi",
+    "stream"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pinojs/pino-tee/issues"
+  },
+  "homepage": "https://github.com/pinojs/pino-tee#readme",
+  "devDependencies": {
+    "pino": "^3.0.5",
+    "pre-commit": "^1.2.0",
+    "snazzy": "^5.0.0",
+    "standard": "^8.6.0",
+    "tap": "^8.0.1"
+  },
+  "dependencies": {
+    "cloneable-readable": "^1.0.0",
+    "fast-json-parse": "^1.0.2",
+    "inherits": "^2.0.3",
+    "minimist": "^1.2.0",
+    "pump": "^1.0.1",
+    "readable-stream": "^2.2.2",
+    "split2": "^2.1.0"
+  }
+}
