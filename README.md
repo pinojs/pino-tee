@@ -1,7 +1,23 @@
 # pino-tee&nbsp;&nbsp;[![Build Status](https://travis-ci.org/pinojs/pino-tee.svg?branch=master)](https://travis-ci.org/pinojs/pino-tee)
 
-Tee pino logs into a file, with multiple levels.
+Tee [pino](https://github.com/pinojs/pino) logs into multiple files,
+according to the given levels.
 Works with any newline delimited json stream.
+
+## Install
+
+```bash
+npm i pino-tee -g
+```
+
+## Usage
+
+The following writes the log output of `app.js` to `./all-logs`, while
+writing only warnings and errors to `./warn-log:
+
+```bash
+node app.js || pino-tee warn ./warn-logs > ./all-logs
+```
 
 ## API
 
@@ -23,7 +39,13 @@ stream.pipe(proess.stdout)
 ### stream.tee(dest, [filter])
 
 Create a new stream that will filter a given line based on some
-parameters. Each line is automatically parsed, or skipped
+parameters. Each line is automatically parsed, or skipped if it is not
+a newline delimited json.
+
+The filter can be a `function` with signature `filter(line)`, where
+`line`  is a parsed JSON object. The filter can also be one of the
+[pino levels](https://github.com/pinojs/pino#loggerlevel), in that case
+_all log lines with that level or greater will be written_.
 
 <a name="acknowledgements"></a>
 ## Acknowledgements
