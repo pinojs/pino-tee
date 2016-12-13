@@ -16,7 +16,7 @@ The following writes the log output of `app.js` to `./all-logs`, while
 writing only warnings and errors to `./warn-log:
 
 ```bash
-node app.js || pino-tee warn ./warn-logs > ./all-logs
+node app.js | pino-tee warn ./warn-logs > ./all-logs
 ```
 
 ## API
