@@ -1,4 +1,4 @@
-# pino-tee
+# pino-tee&nbsp;&nbsp;[![Build Status](https://travis-ci.org/pinojs/pino-tee.svg?branch=master)](https://travis-ci.org/pinojs/pino-tee)
 
 Tee pino logs into a file, with multiple levels.
 Works with any newline delimited json stream.
