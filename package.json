@@ -6,6 +6,9 @@
   "scripts": {
     "test": "standard | snazzy && tap test/*.js"
   },
+  "bin": {
+    "pino-tee": "./tee.js"
+  },
   "precommit": "test",
   "repository": {
     "type": "git",
