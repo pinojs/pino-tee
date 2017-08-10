@@ -33,7 +33,7 @@ const tee = require('pino-tee')
 const fs = require('fs')
 const stream = tee(process.stdin)
 stream.tee(fs.createWriteStream('errors'), line => line.level >= 50)
-stream.pipe(proess.stdout)
+stream.pipe(process.stdout)
 ```
 
 ### stream.tee(dest, [filter])
