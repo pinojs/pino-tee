@@ -68,7 +68,7 @@ function start () {
     if (dest === ':2') {
       dest = process.stderr
     } else {
-      dest = fs.createWriteStream(dest)
+      dest = fs.createWriteStream(dest, {flags: 'a'})
     }
 
     pairs.push({
