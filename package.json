@@ -1,6 +1,6 @@
 {
   "name": "pino-tee",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tee pino logs into a file, with multiple levels",
   "main": "tee.js",
   "scripts": {
