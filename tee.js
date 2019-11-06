@@ -22,9 +22,9 @@ function tee (origin) {
 }
 
 function buildFilter (filter) {
-  if (typeof filter === 'number') {                                                                                                                                           
-    const num = filter                                                                                                                                                        
-    filter = function (v) { return v.level >= num }                                                                                                                           
+  if (typeof filter === 'number') {
+    const num = filter
+    filter = function (v) { return v.level >= num }
   } else if (typeof filter === 'string') {
     const num = pino.levels.values[filter]
 
