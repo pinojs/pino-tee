@@ -80,8 +80,9 @@ a newline delimited json.
 
 The filter can be a `function` with signature `filter(line)`, where
 `line`  is a parsed JSON object. The filter can also be one of the
-[pino levels](https://github.com/pinojs/pino#loggerlevel), in that case
-_all log lines with that level or greater will be written_.
+[pino levels](https://github.com/pinojs/pino#loggerlevel) either 
+as text or as a custom level number, in that case _all log lines with 
+that level or greater will be written_.
 
 <a name="acknowledgements"></a>
 
