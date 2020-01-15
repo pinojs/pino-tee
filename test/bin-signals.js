@@ -83,5 +83,9 @@ function checkFile () {
 }
 
 function msleep (n) {
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n) // eslint-disable-line
+  try {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n) // eslint-disable-line
+  } catch (x) {
+    childProcess.execSync('sleep ' + n / 1000) // For node below version 8
+  }
 }
