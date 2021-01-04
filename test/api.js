@@ -1,7 +1,7 @@
 'use strict'
 
 const split = require('split2')
-const test = require('tap').test
+const { test } = require('tap')
 const PassThrough = require('readable-stream').PassThrough
 const tee = require('..')
 
@@ -59,10 +59,10 @@ test('tee some logs into another stream after a while', function (t) {
 
   const instance = tee(origin)
 
-  setImmediate(function () {
+  process.nextTick(function () {
     instance.tee(teed)
 
-    setImmediate(function () {
+    process.nextTick(function () {
       instance.pipe(dest)
     })
   })
