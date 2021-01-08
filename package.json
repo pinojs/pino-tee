@@ -31,15 +31,15 @@
   "homepage": "https://github.com/pinojs/pino-tee#readme",
   "devDependencies": {
     "pre-commit": "^1.2.2",
-    "snazzy": "^7.0.0",
-    "standard": "^10.0.0",
-    "tap": "^10.0.0",
-    "tmp": "0.0.33"
+    "snazzy": "^9.0.0",
+    "standard": "^16.0.1",
+    "tap": "^14.4.1",
+    "tmp": "0.2.1"
   },
   "dependencies": {
     "cloneable-readable": "^2.1.0",
     "fast-json-parse": "^1.0.3",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.5",
     "pino": "^4.7.0",
     "pump": "^1.0.2",
     "readable-stream": "^2.3.3",
