@@ -23,21 +23,21 @@ node app.js | pino-tee warn ./warn-logs > ./all-logs
 
 ##### NodeJS
 
-You can log to multiple files by spawning a child process:
+You can log to multiple files by spawning a child process. In the following example pino-tee writes into three different files for warn, error & fatal log levels.
 
 ```javascript
-const pino = require('pino');
-const childProcess = require('child_process');
-const stream = require('stream');
+const pino = require('pino')
+const childProcess = require('child_process')
+const stream = require('stream')
 
 // Environment variables
-const cwd = process.cwd();
-const {env} = process;
-const logPath = `${cwd}/log`;
+const cwd = process.cwd()
+const { env } = process
+const logPath = `${cwd}/log`
 
 // Create a stream where the logs will be written
-const logThrough = new stream.PassThrough();
-const log = pino({name: 'project'}, logThrough);
+const logThrough = new stream.PassThrough()
+const log = pino({ name: 'project' }, logThrough)
 
 // Log to multiple files using a separate process
 const child = childProcess.spawn(process.execPath, [
@@ -45,15 +45,50 @@ const child = childProcess.spawn(process.execPath, [
   'warn', `${logPath}/warn.log`,
   'error', `${logPath}/error.log`,
   'fatal', `${logPath}/fatal.log`
-], {cwd, env});
+], { cwd, env })
 
-logThrough.pipe(child.stdin);
+logThrough.pipe(child.stdin)
 
-// Log pretty messages to console (optional, for development purposes only)
-const pretty = pino.pretty();
-pretty.pipe(process.stdout);
-logThrough.pipe(pretty);
+// Writing some test logs
+log.warn('WARNING 1')
+log.error('ERROR 1')
+log.fatal('FATAL 1')
 ```
+
+This prints raw logs into log files, you can also print pretty logs to the console for development purposes. For that, you need to use [pino-multi-stream](http://npm.im/pino-multi-stream). See the example below
+
+```js
+const pinoms = require('pino-multi-stream')
+const childProcess = require('child_process')
+const stream = require('stream')
+
+const cwd = process.cwd()
+const { env } = process
+
+const logThrough = new stream.PassThrough()
+const prettyStream = pinoms.prettyStream()
+const streams = [
+  { stream: logThrough },
+  { stream: prettyStream }
+]
+const log = pinoms(pinoms.multistream(streams))
+
+const child = childProcess.spawn(process.execPath, [
+  require.resolve('pino-tee'),
+  'warn', `${__dirname}/warn`,
+  'error', `${__dirname}/error`,
+  'fatal', `${__dirname}/fatal`
+], { cwd, env })
+
+logThrough.pipe(child.stdin)
+
+// Writing some test logs
+log.warn('WARNING 1')
+log.error('ERROR 1')
+log.fatal('FATAL 1')
+```
+
+Here, we're tapping into the write stream that pino-tee gets and manually formatting the log line using `pino-pretty` to write on the `stdout`. Note that the pretty printing is typically only done while developing.
 
 ## API
 
@@ -80,8 +115,8 @@ a newline delimited json.
 
 The filter can be a `function` with signature `filter(line)`, where
 `line`  is a parsed JSON object. The filter can also be one of the
-[pino levels](https://github.com/pinojs/pino#loggerlevel) either 
-as text or as a custom level number, in that case _all log lines with 
+[pino levels](https://github.com/pinojs/pino#loggerlevel) either
+as text or as a custom level number, in that case _all log lines with
 that level or greater will be written_.
 
 <a name="acknowledgements"></a>
