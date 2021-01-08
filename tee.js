@@ -58,7 +58,7 @@ if (require.main === module) {
 function start () {
   const args = minimist(process.argv.slice(2))
   const pairs = []
-  var i
+  let i
 
   if (args._.length % 2) {
     console.error('pino-tee requires an even amount of args')
@@ -71,7 +71,7 @@ function start () {
     if (dest === ':2') {
       dest = process.stderr
     } else {
-      dest = fs.createWriteStream(dest, {flags: 'a'})
+      dest = fs.createWriteStream(dest, { flags: 'a' })
     }
 
     pairs.push({

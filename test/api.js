@@ -180,6 +180,19 @@ test('filters data using a level name', function (t) {
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
 })
 
+test('filters data using a wrong level name', function (t) {
+  t.plan(1)
+
+  const teed = split(JSON.parse)
+  const dest = split(JSON.parse)
+  const origin = new PassThrough()
+
+  const instance = tee(origin)
+
+  instance.pipe(dest)
+  t.throws(() => instance.tee(teed, 'unknown'))
+})
+
 test('filters data using a custon level number', function (t) {
   t.plan(9)
 
