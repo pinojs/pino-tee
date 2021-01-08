@@ -40,9 +40,9 @@
     "cloneable-readable": "^2.1.0",
     "fast-json-parse": "^1.0.3",
     "minimist": "^1.2.5",
-    "pino": "^4.7.0",
-    "pump": "^1.0.2",
-    "readable-stream": "^2.3.3",
-    "split2": "^2.1.1"
+    "pino": "^6.9.0",
+    "pump": "^3.0.0",
+    "readable-stream": "^3.6.0",
+    "split2": "^3.2.2"
   }
 }
