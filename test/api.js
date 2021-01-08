@@ -59,10 +59,10 @@ test('tee some logs into another stream after a while', function (t) {
 
   const instance = tee(origin)
 
-  process.nextTick(function () {
+  setImmediate(function () {
     instance.tee(teed)
 
-    process.nextTick(function () {
+    setImmediate(function () {
       instance.pipe(dest)
     })
   })
