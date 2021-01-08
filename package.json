@@ -24,6 +24,12 @@
     "stream"
   ],
   "author": "Matteo Collina <hello@matteocollina.com>",
+  "contributors": [
+    {
+      "name": "Salman Mitha",
+      "email": "salmanmitha@gmail.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pinojs/pino-tee/issues"
