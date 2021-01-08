@@ -4,7 +4,7 @@
   "description": "Tee pino logs into a file, with multiple levels",
   "main": "tee.js",
   "scripts": {
-    "test": "standard | snazzy && tap test/*.js"
+    "test": "standard | snazzy && tap test/*.js --cov"
   },
   "bin": {
     "pino-tee": "./tee.js"
