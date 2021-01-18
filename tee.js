@@ -69,9 +69,9 @@ function start () {
   for (i = 0; i < args._.length; i += 2) {
     let dest = args._[i + 1]
     if (dest === ':2') {
-      dest = buildSafeSonicBoom(process.stderr.fd)
+      dest = buildSafeSonicBoom({ fd: process.stderr.fd })
     } else {
-      dest = buildSafeSonicBoom(dest)
+      dest = buildSafeSonicBoom({ fd: dest })
     }
 
     pairs.push({
