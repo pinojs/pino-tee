@@ -14,12 +14,15 @@ npm i pino-tee -g
 
 ##### CLI
 
-The following writes the log output of `app.js` to `./all-logs`, while
-writing only warnings and errors to `./warn-log:
+Specify a minimum log level to write to file.
+
+The following writes **info**, **warn** and **error** level logs to `./info-warn-error-log`, and all output of `app.js` to `./all-logs`:
 
 ```bash
-node app.js | pino-tee warn ./warn-logs > ./all-logs
+node app.js | pino-tee info ./info-warn-error-logs | tee -a ./all-logs
 ```
+
+(using `tee -a ./all-logs` will both write to `./all-logs` and `stdout`, enabling piping of more pino transports)
 
 ##### NodeJS
 
