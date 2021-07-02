@@ -7,7 +7,7 @@ const pump = require('pump')
 const Parse = require('fast-json-parse')
 const minimist = require('minimist')
 const pino = require('pino')
-const fs = require('fs')
+const { buildSafeSonicBoom } = require('pino/lib/tools')
 
 function tee (origin) {
   const clone = cloneable(origin)
@@ -69,9 +69,9 @@ function start () {
   for (i = 0; i < args._.length; i += 2) {
     let dest = args._[i + 1]
     if (dest === ':2') {
-      dest = process.stderr
+      dest = buildSafeSonicBoom({ fd: process.stderr.fd })
     } else {
-      dest = fs.createWriteStream(dest, { flags: 'a' })
+      dest = buildSafeSonicBoom({ fd: dest })
     }
 
     pairs.push({
@@ -79,6 +79,14 @@ function start () {
       dest
     })
   }
+
+  function reopenAll () {
+    pairs.forEach(pair => pair.dest.reopen())
+  }
+
+  process.on('SIGHUP', reopenAll)
+  process.on('SIGUSR1', reopenAll)
+  process.on('SIGUSR2', reopenAll)
 
   const instance = tee(process.stdin)
   pairs.forEach(pair => instance.tee(pair.dest, pair.filter))
