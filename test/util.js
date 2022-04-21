@@ -1,7 +1,7 @@
 const tap = require('tap')
 const sinon = require('sinon')
 
-const { getLevelNumber } = require('../util')
+const { getLevelNumber, getDestinationStream } = require('../util')
 
 tap.test('getLevelNumber should return the correct level', async function (t) {
   t.equal(getLevelNumber(40), 40)
@@ -14,6 +14,9 @@ tap.test('getLevelNumber should return the correct level', async function (t) {
 tap.test('getLevelNumber should throw if an invalid level is provided', async function (t) {
   t.throws(() => {
     getLevelNumber('invalid-level')
+  })
+  t.throws(() => {
+    getLevelNumber(() => {})
   })
 })
 
@@ -28,7 +31,9 @@ tap.test('getDestinationStream should call createWriteStream with appropriate pa
   sinon.assert.calledWith(createWriteStreamStub, './filepath', { flags: 'a' })
 })
 
-// TODO: Write test to handle ':2' case
-// tap.test('getDestinationStream should return process.stderr when', async function (t) {
-//    getDestinationStream(':2')
-// })
+tap.test('getDestinationStream should return process.stderr when', async function (t) {
+  const stream = getDestinationStream(':2')
+
+  t.ok(stream._isStdio)
+  t.equal(stream.fd, 2)
+})

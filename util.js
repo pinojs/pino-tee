@@ -20,6 +20,8 @@ function getLevelNumber (level) {
       throw new Error('no such level')
     }
   }
+
+  throw new Error('no such level')
 }
 
 module.exports = {
