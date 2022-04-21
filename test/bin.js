@@ -24,7 +24,7 @@ test('invoked with correct args', (t) => {
     detached: false
   })
 
-  t.tearDown(() => {
+  t.teardown(() => {
     child.stdin.end()
     child.kill()
   })
@@ -46,7 +46,7 @@ test('invoked with correct args', (t) => {
   child.stderr.pipe(process.stderr)
 
   child.stdout.pipe(split(JSON.parse)).on('data', function (data) {
-    t.deepEqual(data, messages.shift())
+    t.same(data, messages.shift())
     if (messages.length === 0) {
       checkFile()
     }
@@ -56,7 +56,7 @@ test('invoked with correct args', (t) => {
     fs.createReadStream(file.name)
       .pipe(split(JSON.parse))
       .on('data', function (data) {
-        t.deepEqual(data, expected.shift())
+        t.same(data, expected.shift())
       })
   }
 })
@@ -85,10 +85,10 @@ test('invoked with incorrect args', (t) => {
   })
 
   child.on('close', (code) => {
-    t.deepEqual(arr, [
+    t.same(arr, [
       'pino-tee requires an even amount of args\n',
       'Usage: pino-tee [filter dest]..\n'
     ])
-    t.is(code, 1)
+    t.equal(code, 1)
   })
 })
