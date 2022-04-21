@@ -26,7 +26,7 @@ const child = childProcess.spawn(process.execPath, args, {
   detached: false
 })
 
-t.tearDown(() => {
+t.teardown(() => {
   child.stdin.end()
   child.kill()
 })
@@ -49,7 +49,7 @@ messages.forEach(line => child.stdin.write(JSON.stringify(line) + '\n'))
 child.stderr.pipe(process.stderr)
 
 child.stdout.pipe(split(JSON.parse)).on('data', function (data) {
-  t.deepEqual(data, messages.shift())
+  t.same(data, messages.shift())
   if (messages.length === 0) {
     checkFile('info', file1, expected1)
     checkFile('warn', file2, expected2)
@@ -63,7 +63,7 @@ function checkFile (level, file, expected) {
     fs.createReadStream(file.name)
       .pipe(split(JSON.parse))
       .on('data', function (data) {
-        t.deepEqual(data, expected.shift())
+        t.same(data, expected.shift())
       })
   })
 }
