@@ -20,7 +20,7 @@ const child = childProcess.spawn(process.execPath, args, {
   detached: false
 })
 
-t.tearDown(() => {
+t.teardown(() => {
   child.stdin.end()
   child.kill()
 })
@@ -41,12 +41,12 @@ const expected = [messages[2]]
 messages.forEach(line => child.stdin.write(JSON.stringify(line) + '\n'))
 
 child.stdout.pipe(split(JSON.parse)).on('data', function (data) {
-  t.deepEqual(data, messages.shift())
+  t.same(data, messages.shift())
 })
 
 child
   .stderr
   .pipe(split(JSON.parse))
   .on('data', function (data) {
-    t.deepEqual(data, expected.shift())
+    t.same(data, expected.shift())
   })

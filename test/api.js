@@ -29,11 +29,11 @@ test('tee some logs into another stream', function (t) {
   instance.tee(teed)
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.deepEqual(d, lines3.shift())
+    t.same(d, lines3.shift())
   })
 
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
@@ -68,11 +68,11 @@ test('tee some logs into another stream after a while', function (t) {
   })
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.deepEqual(d, lines3.shift())
+    t.same(d, lines3.shift())
   })
 
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
@@ -102,11 +102,11 @@ test('filters data', function (t) {
   instance.tee(teed, line => line.level > 30)
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.deepEqual(d, lines3.shift())
+    t.same(d, lines3.shift())
   })
 
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
@@ -133,11 +133,11 @@ test('skip non-json lines', function (t) {
   instance.tee(teed)
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.deepEqual(d, lines3.shift())
+    t.same(d, lines3.shift())
   })
 
   lines.forEach(line => origin.write(line + '\n'))
@@ -170,11 +170,11 @@ test('filters data using a level name', function (t) {
   instance.tee(teed, 'info')
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.deepEqual(d, lines3.shift())
+    t.same(d, lines3.shift())
   })
 
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
@@ -226,15 +226,15 @@ test('filters data using a custon level number', function (t) {
   instance.tee(teed35, 35)
 
   dest.on('data', function (d) {
-    t.deepEqual(d, lines2.shift())
+    t.same(d, lines2.shift())
   })
 
   teed30.on('data', function (d) {
-    t.deepEqual(d, lines30.shift())
+    t.same(d, lines30.shift())
   })
 
   teed35.on('data', function (d) {
-    t.deepEqual(d, lines35.shift())
+    t.same(d, lines35.shift())
   })
 
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
