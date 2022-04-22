@@ -37,10 +37,10 @@
   "homepage": "https://github.com/pinojs/pino-tee#readme",
   "devDependencies": {
     "pre-commit": "^1.2.2",
+    "sinon": "^13.0.2",
     "snazzy": "^9.0.0",
     "standard": "^16.0.1",
-    "sinon": "^13.0.2",
-    "tap": "^16.0.1",
+    "tap": "^15.2.3",
     "tmp": "0.2.1"
   },
   "dependencies": {
