@@ -81,17 +81,12 @@ test('invoked with incorrect args', (t) => {
 
   const arr = []
   child.stderr.on('data', (d) => {
-    console.log('stderr onData: ', d.toString())
     arr.push(d.toString())
   })
 
   child.on('close', (code) => {
-    console.log('onClose code: ', code)
-    console.log('onClose array: ', arr)
-
     t.same(arr, [
-      'pino-tee requires an even amount of args\n',
-      'Usage: pino-tee [filter dest]..\n'
+      'pino-tee requires an even amount of args\nUsage: pino-tee [filter dest].\n'
     ])
     t.equal(code, 1)
   })

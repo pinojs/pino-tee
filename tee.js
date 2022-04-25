@@ -61,8 +61,7 @@ function start () {
   let i
 
   if (args._.length % 2) {
-    console.error('pino-tee requires an even amount of args')
-    console.error('Usage: pino-tee [filter dest]..')
+    console.error('pino-tee requires an even amount of args\nUsage: pino-tee [filter dest].')
     process.exit(1)
   }
 
