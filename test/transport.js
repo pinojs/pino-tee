@@ -15,7 +15,7 @@ const destinationStreamStubs = {
   [filters.warn]: streamStub()
 }
 
-const { teeTransport } = tap.mock('../v7', {
+const { teeTransport } = tap.mock('../transport', {
   '../util': {
     getLevelNumber: require('../util').getLevelNumber,
     getDestinationStream: (dest) => {
@@ -55,7 +55,7 @@ tap.test('should throw when invalid json is supplied', async (t) => {
 })
 
 tap.test('should return writable stream from default export ', async (t) => {
-  const teeTransport = require('../v7')
+  const teeTransport = require('../transport')
 
   const stream = teeTransport({ filters })
 

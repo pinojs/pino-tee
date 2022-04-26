@@ -103,7 +103,7 @@ Create a new `tee` instance from source. It is an extended instance of
 Example:
 
 ```js
-const tee = require('pino-tee')
+const { tee } = require('pino-tee')
 const fs = require('fs')
 const stream = tee(process.stdin)
 stream.tee(fs.createWriteStream('errors'), line => line.level >= 50)

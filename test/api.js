@@ -3,7 +3,7 @@
 const split = require('split2')
 const { test } = require('tap')
 const PassThrough = require('readable-stream').PassThrough
-const tee = require('..')
+const { tee } = require('..')
 
 test('tee some logs into another stream', function (t) {
   t.plan(4)

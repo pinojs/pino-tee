@@ -7,6 +7,7 @@ const pump = require('pump')
 const Parse = require('fast-json-parse')
 const minimist = require('minimist')
 const pino = require('pino')
+const transport = require('./transport')
 const fs = require('fs')
 
 function tee (origin) {
@@ -49,7 +50,9 @@ function alwaysTrue () {
   return true
 }
 
-module.exports = tee
+module.exports = transport
+
+module.exports.tee = tee
 
 if (require.main === module) {
   start()
