@@ -24,6 +24,26 @@ node app.js | pino-tee info ./info-warn-error-logs | tee -a ./all-logs
 
 (using `tee -a ./all-logs` will both write to `./all-logs` and `stdout`, enabling piping of more pino transports)
 
+##### Pino V7+
+```javascript
+const pino = require('pino')
+
+const pinoTee = pino.transport({
+  target: 'pino-tee',
+  options: {
+    filters: {
+      info: 'info.log',
+      warn: 'warn.log'
+    }
+  }
+})
+
+const logger = pino(pinoTee)
+
+logger.info('example info log')
+logger.error('example error log')
+```
+
 ##### NodeJS
 
 You can log to multiple files by spawning a child process. In the following example pino-tee writes into three different files for warn, error & fatal log levels.
@@ -103,7 +123,7 @@ Create a new `tee` instance from source. It is an extended instance of
 Example:
 
 ```js
-const tee = require('pino-tee')
+const { tee } = require('pino-tee')
 const fs = require('fs')
 const stream = tee(process.stdin)
 stream.tee(fs.createWriteStream('errors'), line => line.level >= 50)

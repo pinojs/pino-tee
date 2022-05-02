@@ -86,8 +86,7 @@ test('invoked with incorrect args', (t) => {
 
   child.on('close', (code) => {
     t.same(arr, [
-      'pino-tee requires an even amount of args\n',
-      'Usage: pino-tee [filter dest]..\n'
+      'pino-tee requires an even number of args\nUsage: pino-tee [filter dest].\n'
     ])
     t.equal(code, 1)
   })

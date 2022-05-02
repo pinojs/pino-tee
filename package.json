@@ -4,7 +4,7 @@
   "description": "Tee pino logs into a file, with multiple levels",
   "main": "tee.js",
   "scripts": {
-    "test": "standard | snazzy && tap test/*.js --cov"
+    "test": "standard | snazzy && tap test/*.js"
   },
   "bin": {
     "pino-tee": "./tee.js"
@@ -37,17 +37,18 @@
   "homepage": "https://github.com/pinojs/pino-tee#readme",
   "devDependencies": {
     "pre-commit": "^1.2.2",
+    "sinon": "^13.0.2",
     "snazzy": "^9.0.0",
     "standard": "^16.0.1",
-    "tap": "^16.0.1",
+    "tap": "^16.1.0",
     "tmp": "0.2.1"
   },
   "dependencies": {
     "cloneable-readable": "^2.1.0",
     "fast-json-parse": "^1.0.3",
     "minimist": "^1.2.5",
-    "pino": "^6.9.0",
     "pump": "^3.0.0",
+    "pino": "^7.0.0",
     "readable-stream": "^3.6.0",
     "split2": "^4.0.0"
   }

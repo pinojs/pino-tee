@@ -7,6 +7,7 @@ const pump = require('pump')
 const Parse = require('fast-json-parse')
 const minimist = require('minimist')
 const pino = require('pino')
+const transport = require('./transport')
 const fs = require('fs')
 
 function tee (origin) {
@@ -49,7 +50,9 @@ function alwaysTrue () {
   return true
 }
 
-module.exports = tee
+module.exports = transport
+
+module.exports.tee = tee
 
 if (require.main === module) {
   start()
@@ -61,8 +64,7 @@ function start () {
   let i
 
   if (args._.length % 2) {
-    console.error('pino-tee requires an even amount of args')
-    console.error('Usage: pino-tee [filter dest]..')
+    console.error('pino-tee requires an even number of args\nUsage: pino-tee [filter dest].')
     process.exit(1)
   }
 
