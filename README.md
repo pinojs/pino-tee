@@ -1,4 +1,4 @@
-# pino-tee&nbsp;&nbsp;[![Build Status](https://github.com/pinojs/pino-tee/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/pinojs/pino-tee/actions/workflows/ci.yml)
+# pino-tee&nbsp;&nbsp;[![Build Status](https://travis-ci.org/pinojs/pino-tee.svg?branch=master)](https://travis-ci.org/pinojs/pino-tee)
 
 Tee [pino](https://github.com/pinojs/pino) logs into multiple files,
 according to the given levels.
