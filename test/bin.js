@@ -7,7 +7,8 @@ const tmp = require('tmp')
 const path = require('path')
 const childProcess = require('child_process')
 
-test('invoked with correct args', async (t) => {
+test('invoked with correct args', (t) => {
+  t.plan(5)
   const file = tmp.fileSync()
   const args = [
     path.join(__dirname, '../tee.js'),
