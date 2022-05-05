@@ -1,5 +1,6 @@
 const tap = require('tap')
 const sinon = require('sinon')
+const proxyquire = require('proxyquire')
 
 const filters = {
   info: './info.log',
@@ -15,8 +16,8 @@ const destinationStreamStubs = {
   [filters.warn]: streamStub()
 }
 
-const { teeTransport } = tap.mock('../transport', {
-  '../util': {
+const { teeTransport } = proxyquire('../transport', {
+  './util': {
     getLevelNumber: require('../util').getLevelNumber,
     getDestinationStream: (dest) => {
       return destinationStreamStubs[dest]

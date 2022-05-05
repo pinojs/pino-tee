@@ -1,5 +1,6 @@
 const tap = require('tap')
 const sinon = require('sinon')
+const proxyquire = require('proxyquire')
 
 const { getLevelNumber, getDestinationStream } = require('../util')
 
@@ -23,7 +24,7 @@ tap.test('getLevelNumber should throw if an invalid level is provided', async fu
 tap.test('getDestinationStream should call createWriteStream with appropriate params for filepath', async function (t) {
   const createWriteStreamStub = sinon.stub()
 
-  const { getDestinationStream } = t.mock('../util', {
+  const { getDestinationStream } = proxyquire('../util', {
     fs: { createWriteStream: createWriteStreamStub }
   })
 
