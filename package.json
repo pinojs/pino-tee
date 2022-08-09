@@ -44,7 +44,7 @@
     "tmp": "0.2.1"
   },
   "dependencies": {
-    "cloneable-readable": "^2.1.0",
+    "cloneable-readable": "^3.0.0",
     "fast-json-parse": "^1.0.3",
     "minimist": "^1.2.5",
     "pump": "^3.0.0",
