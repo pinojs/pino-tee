@@ -68,7 +68,7 @@ const child = childProcess.spawn(process.execPath, [
   'warn', `${logPath}/warn.log`,
   'error', `${logPath}/error.log`,
   'fatal', `${logPath}/fatal.log`
-], { cwd, env })
+], { cwd, env, stdio: ['pipe', 'inherit', 'inherit'] })
 
 logThrough.pipe(child.stdin)
 
