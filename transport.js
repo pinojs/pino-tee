@@ -10,7 +10,7 @@ const teeTransport = options => {
   return line => {
     const res = new Parse(line)
 
-    if (!res || !res.value) {
+    if (!res.value) {
       throw new Error('Failed to parse line: ', line)
     }
 
