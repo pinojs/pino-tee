@@ -52,13 +52,13 @@ test('bin-multiple', (t, done) => {
   child.stdout.pipe(split(JSON.parse)).on('data', function (data) {
     t.assert.deepEqual(data, messages.shift())
     if (messages.length === 0) {
-      checkFile('info', file1, expected1)
-      checkFile('warn', file2, expected2)
-      done()
+      checkFile('info', file1, expected1, () => {
+        checkFile('warn', file2, expected2, done)
+      })
     }
   })
 
-  function checkFile (level, file, expected) {
+  function checkFile (level, file, expected, cb) {
     t.test('checking ' + level + ' file', function (t, done) {
       t.plan(expected.length)
 
@@ -67,7 +67,10 @@ test('bin-multiple', (t, done) => {
         .on('data', function (data) {
           t.assert.deepEqual(data, expected.shift())
         })
-        .on('end', done)
+        .on('end', () => {
+          cb()
+          done()
+        })
     })
   }
 })
