@@ -1,7 +1,8 @@
-# pino-tee&nbsp;&nbsp;[![Build Status](https://github.com/pinojs/pino-tee/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/pinojs/pino-tee/actions/workflows/ci.yml)
+# pino-tee
 
 Tee [pino](https://github.com/pinojs/pino) logs into multiple files,
 according to the given levels.
+
 Works with any newline delimited json stream.
 
 ## Install
@@ -16,13 +17,15 @@ npm i pino-tee -g
 
 Specify a minimum log level to write to file.
 
-The following writes **info**, **warn** and **error** level logs to `./info-warn-error-log`, and all output of `app.js` to `./all-logs`:
+The following writes **info**, **warn** and **error** level logs to
+`./info-warn-error-log`, and all output of `app.js` to `./all-logs`:
 
 ```bash
 node app.js | pino-tee info ./info-warn-error-logs | tee -a ./all-logs
 ```
 
-(using `tee -a ./all-logs` will both write to `./all-logs` and `stdout`, enabling piping of more pino transports)
+(using `tee -a ./all-logs` will both write to `./all-logs` and `stdout`,
+enabling piping of more pino transports)
 
 ##### Pino V7+
 ```javascript
@@ -46,7 +49,9 @@ logger.error('example error log')
 
 ##### NodeJS
 
-You can log to multiple files by spawning a child process. In the following example pino-tee writes into three different files for warn, error & fatal log levels.
+You can log to multiple files by spawning a child process. In the following
+example pino-tee writes into three different files for warn, error & fatal log
+levels.
 
 ```javascript
 const pino = require('pino')
@@ -78,7 +83,9 @@ log.error('ERROR 1')
 log.fatal('FATAL 1')
 ```
 
-This prints raw logs into log files, you can also print pretty logs to the console for development purposes. For that, you need to use [pino-multi-stream](http://npm.im/pino-multi-stream). See the example below
+This prints raw logs into log files, you can also print pretty logs to the
+console for development purposes. For that, you need to use
+[pino-multi-stream](http://npm.im/pino-multi-stream). See the example below
 
 ```js
 const pinoms = require('pino-multi-stream')
@@ -111,7 +118,9 @@ log.error('ERROR 1')
 log.fatal('FATAL 1')
 ```
 
-Here, we're tapping into the write stream that pino-tee gets and manually formatting the log line using `pino-pretty` to write on the `stdout`. Note that the pretty printing is typically only done while developing.
+Here, we're tapping into the write stream that pino-tee gets and manually
+formatting the log line using `pino-pretty` to write on the `stdout`. Note that
+the pretty printing is typically only done while developing.
 
 ## API
 

@@ -1,13 +1,13 @@
 'use strict'
 
-const fs = require('fs')
+const test = require('node:test')
+const fs = require('node:fs')
+const path = require('node:path')
+const childProcess = require('node:child_process')
 const split = require('split2')
-const { test } = require('tap')
 const tmp = require('tmp')
-const path = require('path')
-const childProcess = require('child_process')
 
-test('invoked with correct args', (t) => {
+test('invoked with correct args', (t, done) => {
   t.plan(5)
 
   const file = tmp.fileSync()
@@ -24,7 +24,7 @@ test('invoked with correct args', (t) => {
     detached: false
   })
 
-  t.teardown(() => {
+  t.after(() => {
     child.stdin.end()
     child.kill()
   })
@@ -46,7 +46,7 @@ test('invoked with correct args', (t) => {
   child.stderr.pipe(process.stderr)
 
   child.stdout.pipe(split(JSON.parse)).on('data', function (data) {
-    t.same(data, messages.shift())
+    t.assert.deepEqual(data, messages.shift())
     if (messages.length === 0) {
       checkFile()
     }
@@ -56,12 +56,13 @@ test('invoked with correct args', (t) => {
     fs.createReadStream(file.name)
       .pipe(split(JSON.parse))
       .on('data', function (data) {
-        t.same(data, expected.shift())
+        t.assert.deepEqual(data, expected.shift())
       })
+      .on('end', done)
   }
 })
 
-test('invoked with incorrect args', (t) => {
+test('invoked with incorrect args', (t, done) => {
   t.plan(2)
 
   const args = [
@@ -85,9 +86,10 @@ test('invoked with incorrect args', (t) => {
   })
 
   child.on('close', (code) => {
-    t.same(arr, [
+    t.assert.deepEqual(arr, [
       'pino-tee requires an even number of args\nUsage: pino-tee [filter dest].\n'
     ])
-    t.equal(code, 1)
+    t.assert.equal(code, 1)
+    done()
   })
 })

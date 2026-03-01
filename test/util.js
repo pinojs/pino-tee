@@ -1,39 +1,38 @@
-const tap = require('tap')
+'use strict'
+
+const test = require('node:test')
 const sinon = require('sinon')
 
 const { getLevelNumber, getDestinationStream } = require('../util')
 
-tap.test('getLevelNumber should return the correct level', async function (t) {
-  t.equal(getLevelNumber(40), 40)
-  t.equal(getLevelNumber('40'), 40)
-  t.equal(getLevelNumber('info'), 30)
-  t.equal(getLevelNumber('warn'), 40)
-  t.equal(getLevelNumber('error'), 50)
+test('getLevelNumber should return the correct level', async function (t) {
+  t.assert.equal(getLevelNumber(40), 40)
+  t.assert.equal(getLevelNumber('40'), 40)
+  t.assert.equal(getLevelNumber('info'), 30)
+  t.assert.equal(getLevelNumber('warn'), 40)
+  t.assert.equal(getLevelNumber('error'), 50)
 })
 
-tap.test('getLevelNumber should throw if an invalid level is provided', async function (t) {
-  t.throws(() => {
+test('getLevelNumber should throw if an invalid level is provided', async function (t) {
+  t.assert.throws(() => {
     getLevelNumber('invalid-level')
   })
-  t.throws(() => {
+  t.assert.throws(() => {
     getLevelNumber(() => {})
   })
 })
 
-tap.test('getDestinationStream should call createWriteStream with appropriate params for filepath', async function (t) {
+test('getDestinationStream should call createWriteStream with appropriate params for filepath', async function (t) {
   const createWriteStreamStub = sinon.stub()
-
-  const { getDestinationStream } = t.mock('../util', {
+  getDestinationStream('./filepath', {
     fs: { createWriteStream: createWriteStreamStub }
   })
-
-  getDestinationStream('./filepath')
   sinon.assert.calledWith(createWriteStreamStub, './filepath', { flags: 'a' })
 })
 
-tap.test('getDestinationStream should return process.stderr when', async function (t) {
+test('getDestinationStream should return process.stderr when', async function (t) {
   const stream = getDestinationStream(':2')
 
-  t.ok(stream._isStdio)
-  t.equal(stream.fd, 2)
+  t.assert.ok(stream._isStdio)
+  t.assert.equal(stream.fd, 2)
 })
