@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 'use strict'
 
+const fs = require('node:fs')
 const split = require('split2')
 const cloneable = require('cloneable-readable')
 const pump = require('pump')
@@ -8,7 +9,6 @@ const Parse = require('fast-json-parse')
 const minimist = require('minimist')
 const pino = require('pino')
 const transport = require('./transport')
-const fs = require('fs')
 
 function tee (origin) {
   const clone = cloneable(origin)

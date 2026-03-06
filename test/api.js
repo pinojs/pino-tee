@@ -1,11 +1,11 @@
 'use strict'
 
+const test = require('node:test')
 const split = require('split2')
-const { test } = require('tap')
 const PassThrough = require('readable-stream').PassThrough
 const { tee } = require('..')
 
-test('tee some logs into another stream', function (t) {
+test('tee some logs into another stream', function (t, done) {
   t.plan(4)
 
   const lines = [{
@@ -29,17 +29,20 @@ test('tee some logs into another stream', function (t) {
   instance.tee(teed)
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.same(d, lines3.shift())
+    t.assert.deepEqual(d, lines3.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
+  origin.end()
 })
 
-test('tee some logs into another stream after a while', function (t) {
+test('tee some logs into another stream after a while', function (t, done) {
   t.plan(4)
 
   const lines = [{
@@ -68,17 +71,20 @@ test('tee some logs into another stream after a while', function (t) {
   })
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.same(d, lines3.shift())
+    t.assert.deepEqual(d, lines3.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
+  origin.end()
 })
 
-test('filters data', function (t) {
+test('filters data', function (t, done) {
   t.plan(3)
 
   const lines = [{
@@ -102,17 +108,20 @@ test('filters data', function (t) {
   instance.tee(teed, line => line.level > 30)
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.same(d, lines3.shift())
+    t.assert.deepEqual(d, lines3.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
+  origin.end()
 })
 
-test('skip non-json lines', function (t) {
+test('skip non-json lines', function (t, done) {
   t.plan(3)
 
   const lines = [JSON.stringify({
@@ -133,17 +142,20 @@ test('skip non-json lines', function (t) {
   instance.tee(teed)
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.same(d, lines3.shift())
+    t.assert.deepEqual(d, lines3.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(line + '\n'))
+  origin.end()
 })
 
-test('filters data using a level name', function (t) {
+test('filters data using a level name', function (t, done) {
   t.plan(5)
 
   const lines = [{
@@ -170,14 +182,17 @@ test('filters data using a level name', function (t) {
   instance.tee(teed, 'info')
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed.on('data', function (d) {
-    t.same(d, lines3.shift())
+    t.assert.deepEqual(d, lines3.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
+  origin.end()
 })
 
 test('filters data using a wrong level name', function (t) {
@@ -190,10 +205,10 @@ test('filters data using a wrong level name', function (t) {
   const instance = tee(origin)
 
   instance.pipe(dest)
-  t.throws(() => instance.tee(teed, 'unknown'))
+  t.assert.throws(() => instance.tee(teed, 'unknown'))
 })
 
-test('filters data using a custon level number', function (t) {
+test('filters data using a custom level number', function (t, done) {
   t.plan(9)
 
   const lines = [{
@@ -226,16 +241,19 @@ test('filters data using a custon level number', function (t) {
   instance.tee(teed35, 35)
 
   dest.on('data', function (d) {
-    t.same(d, lines2.shift())
+    t.assert.deepEqual(d, lines2.shift())
   })
 
   teed30.on('data', function (d) {
-    t.same(d, lines30.shift())
+    t.assert.deepEqual(d, lines30.shift())
   })
 
   teed35.on('data', function (d) {
-    t.same(d, lines35.shift())
+    t.assert.deepEqual(d, lines35.shift())
   })
 
+  instance.on('end', done)
+
   lines.forEach(line => origin.write(JSON.stringify(line) + '\n'))
+  origin.end()
 })

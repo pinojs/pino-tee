@@ -1,8 +1,13 @@
+'use strict'
+
 const split = require('split2')
 const Parse = require('fast-json-parse')
-const { getDestinationStream, getLevelNumber } = require('./util')
+const { getDestinationStream: gds, getLevelNumber: gln } = require('./util')
 
-const teeTransport = options => {
+function teeTransport (
+  options,
+  { getDestinationStream = gds, getLevelNumber = gln } = {}
+) {
   const filters = Object
     .entries(options.filters)
     .map(([level, dest]) => [level, getDestinationStream(dest)])

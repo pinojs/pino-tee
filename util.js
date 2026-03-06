@@ -1,7 +1,9 @@
-const fs = require('fs')
+'use strict'
+
+const _fs = require('node:fs')
 const pino = require('pino')
 
-function getDestinationStream (destination) {
+function getDestinationStream (destination, { fs = _fs } = {}) {
   return (destination === ':2')
     ? process.stderr
     : fs.createWriteStream(destination, { flags: 'a' })

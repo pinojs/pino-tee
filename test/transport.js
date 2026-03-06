@@ -1,4 +1,6 @@
-const tap = require('tap')
+'use strict'
+
+const test = require('node:test')
 const sinon = require('sinon')
 
 const filters = {
@@ -15,16 +17,17 @@ const destinationStreamStubs = {
   [filters.warn]: streamStub()
 }
 
-const { teeTransport } = tap.mock('../transport', {
-  '../util': {
-    getLevelNumber: require('../util').getLevelNumber,
-    getDestinationStream: (dest) => {
+const { teeTransport: tt } = require('../transport')
+const teeTransport = function (options) {
+  return tt(options, {
+    getDestinationStream (dest) {
       return destinationStreamStubs[dest]
-    }
-  }
-})
+    },
+    getLevelNumber: require('../util').getLevelNumber
+  })
+}
 
-tap.test('should write to info destination stream correctly', async (t) => {
+test('should write to info destination stream correctly', async () => {
   const lineParser = teeTransport({ filters })
 
   const infoMsg = JSON.stringify({ level: 30, time: 1522431328992, msg: 'info-msg' })
@@ -32,7 +35,7 @@ tap.test('should write to info destination stream correctly', async (t) => {
   sinon.assert.calledWith(destinationStreamStubs[filters.info].write, infoMsg + '\n')
 })
 
-tap.test('should write to warn destination stream correctly', async (t) => {
+test('should write to warn destination stream correctly', async () => {
   const lineParser = teeTransport({ filters })
 
   const warnMsg = JSON.stringify({ level: 40, time: 1522431328992, msg: 'warn-msg' })
@@ -40,7 +43,7 @@ tap.test('should write to warn destination stream correctly', async (t) => {
   sinon.assert.calledWith(destinationStreamStubs[filters.warn].write, warnMsg + '\n')
 })
 
-tap.test('should write to error destination stream correctly', async (t) => {
+test('should write to error destination stream correctly', async () => {
   const lineParser = teeTransport({ filters })
 
   const errorMsg = JSON.stringify({ level: 50, time: 1522431328992, msg: 'error-msg' })
@@ -48,17 +51,17 @@ tap.test('should write to error destination stream correctly', async (t) => {
   sinon.assert.calledWith(destinationStreamStubs[filters.error].write, errorMsg + '\n')
 })
 
-tap.test('should throw when invalid json is supplied', async (t) => {
+test('should throw when invalid json is supplied', async (t) => {
   const lineParser = teeTransport({ filters })
 
-  t.throws(() => lineParser('invalid-json'))
+  t.assert.throws(() => lineParser('invalid-json'))
 })
 
-tap.test('should return writable stream from default export ', async (t) => {
+test('should return writable stream from default export ', async (t) => {
   const teeTransport = require('../transport')
 
   const stream = teeTransport({ filters })
 
-  t.equal(typeof stream, 'object')
-  t.ok(stream.write)
+  t.assert.equal(typeof stream, 'object')
+  t.assert.ok(stream.write)
 })
